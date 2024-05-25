@@ -1,0 +1,39 @@
+name: "Gloud helm gitops workflows"
+on: workflow_dispatch
+
+
+jobs:
+    gcloud-gitops-access:
+        name: "access gcloud for gitops workflows"
+        runs-on: ubuntu-latest
+        permissions:
+            id-token: 'write'
+            contents: 'read'
+        steps:
+            - name: Check out repository code
+              uses: 'actions/checkout@v4'
+
+            - id: auth
+              name: Authenticate gcloud with WIF
+              uses: 'google-github-actions/auth@v2'
+              with:
+                workload_identity_provider:  ${{ secrets.WORKLOAD_IDENTITY_PROVIDER_ID }}
+                service_account: ${{ secrets.SERVICE_ACCOUNT }}
+                
+            - name: Authenticate with GKE
+              run: |
+                  gcloud container clusters get-credentials ${{ secrets.CLUSTER_NAME }} --zone ${{ secrets.ZONE }} --project ${{ secrets.PROJECT_ID }}
+          
+                
+            - uses: actions/checkout@v3
+            - name: Lint Helm
+              uses: WyriHaximus/github-action-helm3@v3
+              with:
+                exec: helm lint ./.helm/nprofileapp/ 
+
+            - name: install helm chart 
+              uses: WyriHaximus/github-action-helm3@v3
+              with:
+                exec: helm install -f nprofileapp-values.yaml nprofileapp-release ./.helm/nprofileapp/
+            
+
