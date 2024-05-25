@@ -22,3 +22,11 @@ version: 0.1.0
 # follow Semantic Versioning. They should reflect the version the application is using.
 # It is recommended to use it with quotes.
 appVersion: "1.16.0"
+
+home: https://github.com/Ishfak00/gcloud-helm-gitops
+
+maintainers:
+  - name: Md ishfakur Rahman
+    url: https://github.com/Ishfak00
+
+icon: https://www.flaticon.com/free-icon/mango_3137152?term=mango&page=1&position=2&origin=search&related_id=3137152
