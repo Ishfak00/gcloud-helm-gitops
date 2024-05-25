@@ -23,9 +23,7 @@ jobs:
             - name: Authenticate with GKE
               run: |
                   gcloud container clusters get-credentials ${{ secrets.CLUSTER_NAME }} --zone ${{ secrets.ZONE }} --project ${{ secrets.PROJECT_ID }}
-          
-                
-            - uses: actions/checkout@v3
+                         
             - name: Lint Helm
               uses: WyriHaximus/github-action-helm3@v3
               with:
