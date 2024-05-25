@@ -20,10 +20,15 @@ jobs:
                 workload_identity_provider:  ${{ secrets.WORKLOAD_IDENTITY_PROVIDER_ID }}
                 service_account: ${{ secrets.SERVICE_ACCOUNT }}
                 
-            - name: Authenticate with GKE
-              run: |
-                  gcloud container clusters get-credentials ${{ secrets.CLUSTER_NAME }} --zone ${{ secrets.ZONE }} --project ${{ secrets.PROJECT_ID }}
-                         
+            - name: Gcoud Info
+              run: gcloud info #container clusters get-credentials ${{ secrets.CLUSTER_NAME }} --zone ${{ secrets.ZONE_NAME }} --project ${{ secrets.PROJECT_ID }}
+              
+            - name: Get GKE Kubeconfig credentials
+              uses: 'google-github-actions/get-gke-credentials@v2'
+              with:
+                cluster_name:  '${{ secrets.CLUSTER_NAME }}'
+                location: '${{ secrets.ZONE_NAME }}'      
+
             - name: Lint Helm
               uses: WyriHaximus/github-action-helm3@v3
               with:
