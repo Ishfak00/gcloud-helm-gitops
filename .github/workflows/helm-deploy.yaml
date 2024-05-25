@@ -32,11 +32,11 @@ jobs:
             - name: Lint Helm
               uses: WyriHaximus/github-action-helm3@v3
               with:
-                exec: helm lint -f nprofileapp-values.yaml ./.helm/nprofileapp/ 
+                exec: helm lint -f ./.helm/nprofileapp-values.yaml ./.helm/nprofileapp/ 
 
             - name: install helm chart 
               uses: WyriHaximus/github-action-helm3@v3
               with:
-                exec: helm install -f nprofileapp-values.yaml nprofileapp-release ./.helm/nprofileapp/
+                exec: helm install -f ./.helm/nprofileapp-values.yaml nprofileapp-release ./.helm/nprofileapp/
             
 
